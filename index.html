@@ -3,11 +3,29 @@
 <head>
     <title>Javascript Game</title>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- http://proger.i-forge.net/The_smallest_transparent_pixel/ -->
     <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">
     <link rel="stylesheet" href="static/main.css">
 </head>
 <body>
-
+    <div class="wrap">
+    <header>MegaDeath Star Destroyer Super 2000 XXXL</header>
+    <div class="game-wrapper">
+    <div class="game"></div>
+    <div class="congratulations">
+    <h1>Congratulations!</h1>
+    <h2>You won the game</h2>
+    <button class="btn" onclick="window.location.reload()">Restart</button>
+    </div>
+    <div class="game-over">
+    <h1>The empire has won!</h1>
+    <h2>You mercilessly lost, we are not even sorry.</h2>
+    <button class="btn" onclick="window.location.reload()">Restart</button>
+    </div>
+    </div>
+    <footer>Use the left & right keys to move and space to shoot pew pew</footer>
+    </div>
+    <script src="game.js"></script>
 </body>
 </html>
