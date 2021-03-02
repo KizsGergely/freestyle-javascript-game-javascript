@@ -40,7 +40,7 @@ footer {
 .game {
   width: 1366px;
   height: 1024px;
-  background: url("images/space.jpg");
+  background: url("images/space.png");
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: relative;
   animation: scroll-background 60s linear infinite;
@@ -53,6 +53,31 @@ footer {
   to {
     background-position-y: 1024px;
   }
+}
+
+.game .enemy {
+  position: absolute;
+  margin-left: -20px;
+  margin-top: -18px;
+  width: 40px;
+}
+
+.game .player {
+  position: absolute;
+  margin-left: -30px;
+  width: 60px;
+}
+
+.game .laser {
+  position: absolute;
+  margin-left: -2.5px;
+  height: 30px;
+}
+
+.game .enemy-laser {
+  position: absolute;
+  margin-left: -2.5px;
+  height: 30px;
 }
 
 .congratulations {
@@ -109,3 +134,6 @@ footer {
   }
 }
 
+footer {
+  font-size: 40px;
+}
