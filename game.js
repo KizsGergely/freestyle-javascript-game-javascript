@@ -1,18 +1,40 @@
-const GAME_WIDTH = 1366;
-const GAME_HEIGHT = 1024;
+const KEY_CODE_LEFT = 37;
+const KEY_CODE_RIGHT = 39;
+const KEY_CODE_SPACE = 32;
+
+const GAME_WIDTH = document.querySelector(".game").clientWidth;
+const GAME_HEIGHT = document.querySelector(".game").clientHeight;
+
+const PLAYER_WIDTH = 20;
 
 const GAME_STATE = {
+    leftPressed: false,
+    rightPressed: false,
+    spacePressed: false,
     playerX: 0,
     playerY: 0,
 };
 
 function setPosition($el, x, y) {
-    $el.style.transform = `translate(${x}px, ${y}px)`;
+    if (x <= 1255) {
+        $el.style.transform = `translate(${x}px, ${y}px)`;
+    }
+}
+
+function widthLimit(x, min, max) {
+    if (x < min) {
+        return min
+    } else if (x > max) {
+        return max
+    } else {
+        return x
+    }
+
 }
 
 function createPlayer($container) {
-    GAME_STATE.playerX = GAME_WIDTH / 2 - 55;
-    GAME_STATE.playerY = GAME_HEIGHT - 265;
+    GAME_STATE.playerX = GAME_WIDTH / 2;
+    GAME_STATE.playerY = GAME_HEIGHT - 200;
     const $player = document.createElement("img");
     $player.src = "static/images/x.png";
     $player.className = "player";
@@ -27,4 +49,44 @@ function initGame() {
 
 }
 
+function updatePlayer() {
+    if (GAME_STATE.leftPressed) {
+        GAME_STATE.playerX -= 35;
+    }
+    if (GAME_STATE.rightPressed) {
+        GAME_STATE.playerX += 35;
+    }
+    GAME_STATE.playerX = widthLimit(GAME_STATE.playerX, PLAYER_WIDTH, GAME_WIDTH - PLAYER_WIDTH);
+    const $player = document.querySelector(".player");
+    setPosition($player, GAME_STATE.playerX, GAME_STATE.playerY);
+}
+
+function update() {
+    updatePlayer();
+    window.requestAnimationFrame(update);
+}
+
+function onKeyDown(e) {
+    if (e.keyCode === KEY_CODE_LEFT) {
+        GAME_STATE.leftPressed = true;
+    } else if (e.keyCode === KEY_CODE_RIGHT) {
+        GAME_STATE.rightPressed = true;
+    } else if (e.keyCode === KEY_CODE_SPACE) {
+        GAME_STATE.spacePressed = true;
+    }
+}
+
+function onKeyUp(e) {
+    if (e.keyCode === KEY_CODE_LEFT) {
+        GAME_STATE.leftPressed = false;
+    } else if (e.keyCode === KEY_CODE_RIGHT) {
+        GAME_STATE.rightPressed = false;
+    } else if (e.keyCode === KEY_CODE_SPACE) {
+        GAME_STATE.spacePressed = false;
+    }
+}
+
 initGame();
+window.addEventListener("keydown", onKeyDown);
+window.addEventListener("keyup", onKeyUp);
+window.requestAnimationFrame(update);
