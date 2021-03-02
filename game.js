@@ -1,13 +1,15 @@
 const KEY_CODE_LEFT = 37;
 const KEY_CODE_RIGHT = 39;
 const KEY_CODE_SPACE = 32;
+const PLAYER_MAX_SPEED = 800;
 
 const GAME_WIDTH = document.querySelector(".game").clientWidth;
 const GAME_HEIGHT = document.querySelector(".game").clientHeight;
 
-const PLAYER_WIDTH = 20;
+const PLAYER_WIDTH = 30;
 
 const GAME_STATE = {
+    lastTime: Date.now(),
     leftPressed: false,
     rightPressed: false,
     spacePressed: false,
@@ -16,7 +18,7 @@ const GAME_STATE = {
 };
 
 function setPosition($el, x, y) {
-    if (x <= 1255) {
+    {
         $el.style.transform = `translate(${x}px, ${y}px)`;
     }
 }
@@ -34,7 +36,7 @@ function widthLimit(x, min, max) {
 
 function createPlayer($container) {
     GAME_STATE.playerX = GAME_WIDTH / 2;
-    GAME_STATE.playerY = GAME_HEIGHT - 200;
+    GAME_STATE.playerY = GAME_HEIGHT - 140;
     const $player = document.createElement("img");
     $player.src = "static/images/x.png";
     $player.className = "player";
@@ -49,12 +51,12 @@ function initGame() {
 
 }
 
-function updatePlayer() {
+function updatePlayer(dt) {
     if (GAME_STATE.leftPressed) {
-        GAME_STATE.playerX -= 35;
+        GAME_STATE.playerX -= dt * PLAYER_MAX_SPEED;
     }
     if (GAME_STATE.rightPressed) {
-        GAME_STATE.playerX += 35;
+        GAME_STATE.playerX += dt * PLAYER_MAX_SPEED;
     }
     GAME_STATE.playerX = widthLimit(GAME_STATE.playerX, PLAYER_WIDTH, GAME_WIDTH - PLAYER_WIDTH);
     const $player = document.querySelector(".player");
@@ -62,7 +64,10 @@ function updatePlayer() {
 }
 
 function update() {
-    updatePlayer();
+    const currentTime = Date.now();
+    const dt = (currentTime - GAME_STATE.lastTime) / 1000;
+    updatePlayer(dt);
+    GAME_STATE.lastTime = currentTime;
     window.requestAnimationFrame(update);
 }
 
