@@ -40,7 +40,7 @@ footer {
 .game {
   width: 1366px;
   height: 1024px;
-  background: url("images/space.jpg");
+  background: url("images/space.png");
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
   position: relative;
   animation: scroll-background 60s linear infinite;

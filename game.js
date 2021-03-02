@@ -1,5 +1,5 @@
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+const GAME_WIDTH = 1366;
+const GAME_HEIGHT = 1024;
 
 const GAME_STATE = {
     playerX: 0,
@@ -7,14 +7,14 @@ const GAME_STATE = {
 };
 
 function setPosition($el, x, y) {
-    $el.style.transform = `translate$(x)px, $(y)px)`;
+    $el.style.transform = `translate(${x}px, ${y}px)`;
 }
 
 function createPlayer($container) {
-    GAME_STATE.playerX = GAME_WIDTH / 2;
-    GAME_STATE.playerY = GAME_HEIGHT - 50;
+    GAME_STATE.playerX = GAME_WIDTH / 2 - 55;
+    GAME_STATE.playerY = GAME_HEIGHT - 265;
     const $player = document.createElement("img");
-    $player.src = "/images/xwing.jpg";
+    $player.src = "static/images/x.png";
     $player.className = "player";
     $container.appendChild($player);
     setPosition($player, GAME_STATE.playerX, GAME_STATE.playerY);
