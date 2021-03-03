@@ -7,7 +7,7 @@ const GAME_HEIGHT = document.querySelector(".game").clientHeight;
 
 const PLAYER_WIDTH = 30;
 const PLAYER_MAX_SPEED = 730;
-const LASER_MAX_SPEED = 600.0;
+const LASER_MAX_SPEED = 700.0;
 const LASER_COOLDOWN = 0.5;
 
 const ENEMIES_PER_ROW = 4;
@@ -113,6 +113,8 @@ function createLaser($container, x, y, side) {
     $container.appendChild($element);
     const laser = { x, y, $element };
     GAME_STATE.lasers.push(laser);
+    const audio = new Audio("static/sound/XWingFire.mp3");
+    audio.play();
     setPosition($element, x, y);
 }
 
