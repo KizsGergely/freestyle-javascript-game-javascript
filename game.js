@@ -8,6 +8,13 @@ const GAME_HEIGHT = document.querySelector(".game").clientHeight;
 
 const PLAYER_WIDTH = 30;
 
+const ENEMIES_PER_ROW = 4;
+const ENEMIES_ROW_NUMBER = 2;
+const ENEMY_HORIZONTAL_PADDING = 100;
+const ENEMY_VERTICAL_PADDING = 80;
+const ENEMY_VERTICAL_SPACING = 80;
+
+
 const GAME_STATE = {
     lastTime: Date.now(),
     leftPressed: false,
@@ -15,6 +22,7 @@ const GAME_STATE = {
     spacePressed: false,
     playerX: 0,
     playerY: 0,
+    enemies: []
 };
 
 function setPosition($el, x, y) {
@@ -36,7 +44,7 @@ function widthLimit(x, min, max) {
 
 function createPlayer($container) {
     GAME_STATE.playerX = GAME_WIDTH / 2;
-    GAME_STATE.playerY = GAME_HEIGHT - 140;
+    GAME_STATE.playerY = GAME_HEIGHT - 100;
     const $player = document.createElement("img");
     $player.src = "static/images/x.png";
     $player.className = "player";
@@ -44,11 +52,32 @@ function createPlayer($container) {
     setPosition($player, GAME_STATE.playerX, GAME_STATE.playerY);
 }
 
+function createEnemy($container, x, y) {
+    const $element = document.createElement("img");
+    $element.src = "static/images/enemy-blue-1.png";
+    $element.className = "enemy";
+    $container.appendChild($element);
+    const enemy = {
+        x,
+        y,
+        $element
+    };
+    GAME_STATE.enemies.push(enemy);
+    setPosition($element, x, y);
+}
 function initGame() {
     const $container = document.querySelector(".game");
     createPlayer($container);
 
 
+    const enemySpacing =  (GAME_WIDTH - ENEMY_HORIZONTAL_PADDING * 2) / (ENEMIES_PER_ROW - 1);
+    for (let j = 0; j < ENEMIES_ROW_NUMBER; j++) {
+        let y = ENEMY_VERTICAL_PADDING + j * ENEMY_VERTICAL_SPACING;
+    for (let i = 0; i < ENEMIES_PER_ROW; i++) {
+        let x = i * enemySpacing + ENEMY_HORIZONTAL_PADDING;
+        createEnemy($container, x, y);
+    }
+  }
 }
 
 function updatePlayer(dt) {
