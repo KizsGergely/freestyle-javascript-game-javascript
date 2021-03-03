@@ -123,8 +123,17 @@ function updateLasers(dt, $container) {
   for (let i = 0; i < lasers.length; i++) {
     const laser = lasers[i];
     laser.y -= dt * LASER_MAX_SPEED;
+    if (laser.y < 0) {
+        removeLaser($container, laser);
+    }
     setPosition(laser.$element, laser.x, laser.y);
   }
+  GAME_STATE.lasers = GAME_STATE.lasers.filter(e => !e.isRemoved);
+}
+
+function removeLaser($container, laser) {
+    $container.removeChild(laser.$element);
+    laser.isRemoved = true;
 }
 
 function update(e) {
@@ -134,6 +143,7 @@ function update(e) {
     const $container = document.querySelector(".game");
     updatePlayer(dt, $container);
     updateLasers(dt, $container);
+
     GAME_STATE.lastTime = currentTime;
     window.requestAnimationFrame(update);
 }
