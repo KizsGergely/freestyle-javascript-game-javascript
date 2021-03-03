@@ -1,12 +1,14 @@
 const KEY_CODE_LEFT = 37;
 const KEY_CODE_RIGHT = 39;
 const KEY_CODE_SPACE = 32;
-const PLAYER_MAX_SPEED = 730;
 
 const GAME_WIDTH = document.querySelector(".game").clientWidth;
 const GAME_HEIGHT = document.querySelector(".game").clientHeight;
 
 const PLAYER_WIDTH = 30;
+const PLAYER_MAX_SPEED = 730;
+const LASER_MAX_SPEED = 600.0;
+const LASER_COOLDOWN = 0.5;
 
 const ENEMIES_PER_ROW = 4;
 const ENEMIES_ROW_NUMBER = 2;
@@ -39,7 +41,6 @@ function widthLimit(x, min, max) {
     } else {
         return x
     }
-
 }
 
 function createPlayer($container) {
@@ -80,16 +81,32 @@ function initGame() {
   }
 }
 
-function updatePlayer(dt) {
+function updatePlayer(dt, $container) {
     if (GAME_STATE.leftPressed) {
-        GAME_STATE.playerX -= dt * PLAYER_MAX_SPEED;
+    GAME_STATE.playerX -= dt * PLAYER_MAX_SPEED;
     }
     if (GAME_STATE.rightPressed) {
-        GAME_STATE.playerX += dt * PLAYER_MAX_SPEED;
+    GAME_STATE.playerX += dt * PLAYER_MAX_SPEED;
     }
+
     GAME_STATE.playerX = widthLimit(GAME_STATE.playerX, PLAYER_WIDTH, GAME_WIDTH - PLAYER_WIDTH);
+
+    if (GAME_STATE.spacePressed && GAME_STATE.playerCooldown <= 0) {
+    createLaser($container, GAME_STATE.playerX, GAME_STATE.playerY);
+    GAME_STATE.playerCooldown = LASER_COOLDOWN;
+  }
     const $player = document.querySelector(".player");
     setPosition($player, GAME_STATE.playerX, GAME_STATE.playerY);
+}
+
+function createLaser($container, x, y) {
+    const $element = document.createElement("img");
+    $element.src = "/static/images/laserRed.png";
+    $element.className = "laser";
+    $container.appendChild($element);
+    const laser = { x, y, $element };
+    GAME_STATE.lasers.push(laser);
+    setPosition($element, x, y);
 }
 
 function update() {
