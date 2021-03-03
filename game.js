@@ -148,7 +148,10 @@ function removeLaser($container, laser) {
 }
 
 function destroyEnemy($container, enemy) {
-    $container.removeChild(enemy.$element);
+    enemy.$element.src = "static/images/explosion.png";
+    const audio = new Audio("static/sound/tieExplode.mp3");
+    audio.play();
+    setTimeout(function() {$container.removeChild(enemy.$element);}, 100);
     enemy.isDead = true;
 }
 
