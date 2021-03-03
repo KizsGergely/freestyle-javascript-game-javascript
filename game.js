@@ -57,7 +57,7 @@ function createPlayer($container) {
 
 function createEnemy($container, x, y) {
     const $element = document.createElement("img");
-    $element.src = "static/images/enemy-blue-1.png";
+    $element.src = "static/images/tie.png";
     $element.className = "enemy";
     $container.appendChild($element);
     const enemy = {
@@ -127,6 +127,17 @@ function updateLasers(dt, $container) {
         removeLaser($container, laser);
     }
     setPosition(laser.$element, laser.x, laser.y);
+    const laserBeam = laser.$element.getBoundingClientRect();
+    const enemies = GAME_STATE.enemies;
+    for (let i=0; i<enemies.length; i++) {
+        const enemy = enemies[i];
+        if (enemy.isDead) continue;
+        const target = enemy.$element.getBoundingClientRect();
+        if (laserHit(laserBeam, target)) {
+            destroyEnemy($container, enemy);
+            removeLaser($container, laser);
+        }
+    }
   }
   GAME_STATE.lasers = GAME_STATE.lasers.filter(e => !e.isRemoved);
 }
@@ -134,6 +145,18 @@ function updateLasers(dt, $container) {
 function removeLaser($container, laser) {
     $container.removeChild(laser.$element);
     laser.isRemoved = true;
+}
+
+function destroyEnemy($container, enemy) {
+    $container.removeChild(enemy.$element);
+    enemy.isDead = true;
+}
+
+function laserHit(laser, target) {
+    return !(
+        laser.right < target.left || laser.left > target.right ||
+        laser.bottom < target.top || laser.top > target.bottom
+    );
 }
 
 function update(e) {
