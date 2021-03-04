@@ -1,3 +1,6 @@
+let STORAGE = window.localStorage;
+
+
 const KEY_CODE_LEFT = 37;
 const KEY_CODE_RIGHT = 39;
 const KEY_CODE_SPACE = 32;
@@ -18,6 +21,7 @@ const ENEMY_VERTICAL_SPACING = 80;
 const ENEMY_COOLDOWN = 5.0;
 
 
+
 const GAME_STATE = {
     lastTime: Date.now(),
     leftPressed: false,
@@ -29,7 +33,8 @@ const GAME_STATE = {
     lasers: [],
     enemies: [],
     enemyLasers: [],
-    gameOver : false
+    gameOver : false,
+    game_score : 0
 };
 
 function setPosition($el, x, y) {
@@ -71,6 +76,7 @@ function destroyPlayer($container, player) {
   audio.play();
   const hateYou = new Audio("static/sounds/hateyou.mp3");
   setTimeout(function(){hateYou.play()}, 2000);
+  setTimeout(function(){hateYou.play()}, 2000);
 }
 
 function createEnemy($container, x, y) {
@@ -111,7 +117,6 @@ function updateEnemies(dt, $container) {
 function initGame() {
     const $container = document.querySelector(".game");
     createPlayer($container);
-
 
     const enemySpacing =  (GAME_WIDTH - ENEMY_HORIZONTAL_PADDING * 2) / (ENEMIES_PER_ROW - 1);
     for (let j = 0; j < ENEMIES_ROW_NUMBER; j++) {
@@ -227,6 +232,7 @@ function destroyEnemy($container, enemy) {
     const audio = new Audio("static/sounds/tieExplode.mp3");
     audio.play();
     setTimeout(function() {$container.removeChild(enemy.$element);}, 100);
+    GAME_STATE.game_score++;
     enemy.isDead = true;
 }
 
@@ -246,10 +252,15 @@ function update(e) {
     const dt = (currentTime - GAME_STATE.lastTime) / 1000.0;
 
     if (GAME_STATE.gameOver) {
+        let score = GAME_STATE.game_score;
+        document.getElementsByClassName("score")[1].innerHTML = score;
         document.querySelector(".game-over").style.display = "block";
         return;
     }
     if (hasWon()) {
+        let score = GAME_STATE.game_score;
+        document.getElementsByClassName("score")[0].innerHTML = score;
+        STORAGE.setItem('Scores' + Math.random().toString(), GAME_STATE.game_score.toString());
         const won = new Audio("static/sounds/won.mp3");
         setTimeout(function() {won.play();}, 3000);
         document.querySelector(".congratulations").style.display = "block";
