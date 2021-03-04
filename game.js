@@ -102,6 +102,7 @@ function updateEnemies(dt, $container) {
         }
     }
     GAME_STATE.enemies = GAME_STATE.enemies.filter(e => !e.isDead);
+
 }
 
 function initGame() {
@@ -233,12 +234,20 @@ function laserHit(laser, target) {
     );
 }
 
+function hasWon() {
+    return GAME_STATE.enemies.length === 0;
+}
+
 function update(e) {
     const currentTime = Date.now();
     const dt = (currentTime - GAME_STATE.lastTime) / 1000.0;
 
     if (GAME_STATE.gameOver) {
         document.querySelector(".game-over").style.display = "block";
+        return;
+    }
+    if (hasWon()) {
+        document.querySelector(".congratulations").style.display = "block";
         return;
     }
     const $container = document.querySelector(".game");
