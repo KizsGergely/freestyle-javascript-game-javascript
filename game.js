@@ -63,11 +63,14 @@ function createPlayer($container) {
     $container.appendChild($player);
     setPosition($player, GAME_STATE.playerX, GAME_STATE.playerY);
 }
+
 function destroyPlayer($container, player) {
   $container.removeChild(player);
   GAME_STATE.gameOver = true;
-  const audio = new Audio("static/sound/hateyou.mp3");
+  const audio = new Audio("static/sounds/XWingExplode.mp3");
   audio.play();
+  const hateYou = new Audio("static/sounds/hateyou.mp3");
+  setTimeout(function(){hateYou.play()}, 2000);
 }
 
 function createEnemy($container, x, y) {
@@ -150,7 +153,7 @@ function createLaser($container, x, y, side) {
     $container.appendChild($element);
     const laser = { x, y, $element };
     GAME_STATE.lasers.push(laser);
-    const audio = new Audio("static/sound/XWingFire.mp3");
+    const audio = new Audio("static/sounds/XWingFire.mp3");
     audio.play();
     setPosition($element, x, y);
 }
@@ -192,7 +195,7 @@ function createEnemyLaser($container, x, y) {
   $container.appendChild($element);
   const laser = { x, y, $element };
   GAME_STATE.enemyLasers.push(laser);
-  const audio = new Audio("static/sound/tieFire.mp3");
+  const audio = new Audio("static/sounds/tieFire.mp3");
   audio.play();
   setPosition($element, x, y);
 }
@@ -221,7 +224,7 @@ function updateEnemyLasers(dt, $container) {
 
 function destroyEnemy($container, enemy) {
     enemy.$element.src = "static/images/explosion.png";
-    const audio = new Audio("static/sound/tieExplode.mp3");
+    const audio = new Audio("static/sounds/tieExplode.mp3");
     audio.play();
     setTimeout(function() {$container.removeChild(enemy.$element);}, 100);
     enemy.isDead = true;
@@ -247,6 +250,8 @@ function update(e) {
         return;
     }
     if (hasWon()) {
+        const won = new Audio("static/sounds/won.mp3");
+        setTimeout(function() {won.play();}, 3000);
         document.querySelector(".congratulations").style.display = "block";
         return;
     }
