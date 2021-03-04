@@ -6,7 +6,7 @@ const GAME_WIDTH = document.querySelector(".game").clientWidth;
 const GAME_HEIGHT = document.querySelector(".game").clientHeight;
 
 const PLAYER_WIDTH = 30;
-const PLAYER_MAX_SPEED = 730;
+const PLAYER_MAX_SPEED = 800;
 const LASER_MAX_SPEED = 700.0;
 const LASER_COOLDOWN = 0.5;
 
