@@ -29,6 +29,7 @@ const GAME_STATE = {
     lasers: [],
     enemies: [],
     enemyLasers: [],
+    gameOver : false
 };
 
 function setPosition($el, x, y) {
@@ -61,6 +62,12 @@ function createPlayer($container) {
     $player.className = "player";
     $container.appendChild($player);
     setPosition($player, GAME_STATE.playerX, GAME_STATE.playerY);
+}
+function destroyPlayer($container, player) {
+  $container.removeChild(player);
+  GAME_STATE.gameOver = true;
+  const audio = new Audio("static/sound/hateyou.mp3");
+  audio.play();
 }
 
 function createEnemy($container, x, y) {
@@ -198,6 +205,14 @@ function updateEnemyLasers(dt, $container) {
             removeLaser($container, laser);
         }
         setPosition(laser.$element, laser.x, laser.y);
+            const laserbeam = laser.$element.getBoundingClientRect();
+            const player = document.querySelector(".player");
+            const target = player.getBoundingClientRect();
+            if (laserHit(laserbeam, target)) {
+            destroyPlayer($container, player);
+            removeLaser($container, laser);
+            break;
+    }
     }
     GAME_STATE.enemyLasers = GAME_STATE.enemyLasers.filter(e => !e.isRemoved);
 }
@@ -222,6 +237,10 @@ function update(e) {
     const currentTime = Date.now();
     const dt = (currentTime - GAME_STATE.lastTime) / 1000.0;
 
+    if (GAME_STATE.gameOver) {
+        document.querySelector(".game-over").style.display = "block";
+        return;
+    }
     const $container = document.querySelector(".game");
     updatePlayer(dt, $container);
     updateLasers(dt, $container);
