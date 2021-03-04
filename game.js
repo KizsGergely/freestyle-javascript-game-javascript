@@ -1,6 +1,5 @@
 let STORAGE = window.localStorage;
 
-
 const KEY_CODE_LEFT = 37;
 const KEY_CODE_RIGHT = 39;
 const KEY_CODE_SPACE = 32;
@@ -19,8 +18,6 @@ const ENEMY_HORIZONTAL_PADDING = 100;
 const ENEMY_VERTICAL_PADDING = 80;
 const ENEMY_VERTICAL_SPACING = 80;
 const ENEMY_COOLDOWN = 5.0;
-
-
 
 const GAME_STATE = {
     lastTime: Date.now(),
@@ -70,13 +67,14 @@ function createPlayer($container) {
 }
 
 function destroyPlayer($container, player) {
-  $container.removeChild(player);
-  GAME_STATE.gameOver = true;
-  const audio = new Audio("static/sounds/XWingExplode.mp3");
-  audio.play();
-  const hateYou = new Audio("static/sounds/hateyou.mp3");
-  setTimeout(function(){hateYou.play()}, 2000);
-  setTimeout(function(){hateYou.play()}, 2000);
+    player.src = "static/images/explosion.png";
+    GAME_STATE.gameOver = true;
+    const audio = new Audio("static/sounds/XWingExplode.mp3");
+    audio.play();
+    setTimeout(function() {$container.removeChild(player);}, 100);
+    const hateYou = new Audio("static/sounds/hateyou.mp3");
+    setTimeout(function(){hateYou.play()}, 2000);
+
 }
 
 function createEnemy($container, x, y) {
@@ -226,7 +224,6 @@ function updateEnemyLasers(dt, $container) {
     GAME_STATE.enemyLasers = GAME_STATE.enemyLasers.filter(e => !e.isRemoved);
 }
 
-
 function destroyEnemy($container, enemy) {
     enemy.$element.src = "static/images/explosion.png";
     const audio = new Audio("static/sounds/tieExplode.mp3");
@@ -252,14 +249,12 @@ function update(e) {
     const dt = (currentTime - GAME_STATE.lastTime) / 1000.0;
 
     if (GAME_STATE.gameOver) {
-        let score = GAME_STATE.game_score;
-        document.getElementsByClassName("score")[1].innerHTML = score;
+        document.getElementsByClassName("score")[1].innerHTML = GAME_STATE.game_score;
         document.querySelector(".game-over").style.display = "block";
         return;
     }
     if (hasWon()) {
-        let score = GAME_STATE.game_score;
-        document.getElementsByClassName("score")[0].innerHTML = score;
+        document.getElementsByClassName("score")[0].innerHTML = GAME_STATE.game_score;
         STORAGE.setItem('Scores' + Math.random().toString(), GAME_STATE.game_score.toString());
         const won = new Audio("static/sounds/won.mp3");
         setTimeout(function() {won.play();}, 3000);
