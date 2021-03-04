@@ -1,31 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Javascript Game</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- http://proger.i-forge.net/The_smallest_transparent_pixel/ -->
     <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">
     <link rel="stylesheet" href="static/main.css">
+    <title>Mega Death Star Destroyer Super 2000 XXXL</title>
 </head>
 <body>
-    <div class="wrap">
-    <header>MegaDeath Star Destroyer Super 2000 XXXL</header>
-    <div class="game-wrapper">
-    <div class="game"></div>
-    <div class="congratulations">
-    <h1>Congratulations!</h1>
-    <h2>You won the game</h2>
-    <button class="btn" onclick="window.location.reload()">Restart</button>
+
+<h1 id="init"><img src="static/images/imperialInvaders.jpg"></h1>
+<h1 class="menu">Mega Death Star Destroyer Super 2000 XXXL<br><br><br>Press enter to start pew-pew-ing!</h1>
+<h3 id="hide">Creators:<br><br>Gergely Kiss<br><br>Zoltan Karolyi<br><br>Balint Molnar</h3>
+
+<section class="star-wars">
+  <div class="crawl">
+    <div class="title">
+      <p>Episode IV</p>
+      <h1>A New Hope</h1>
     </div>
-    <div class="game-over">
-    <h1>The empire has won!</h1>
-    <h2>You mercilessly lost, we are not even sorry.</h2>
-    <button class="btn" onclick="window.location.reload()">Restart</button>
-    </div>
-    </div>
-    <footer>Use the left & right keys to move and space to shoot pew pew</footer>
-    </div>
-    <script src="game.js"></script>
+
+    <p>It is a period of civil war. Rebel spaceships, striking from a hidden base, have won their first victory against the evil Galactic Empire.</p>
+
+      <p>During the battle, Rebel spies managed to steal secret plans to the Empire’s ultimate weapon, the DEATH STAR, an armored space station with enough power to destroy an entire planet.</p>
+
+    <p id="lastp">Now it lies on your shoulders to destroy the infamous DEATH STAR and end the Empire's reign once and for all.</p>
+  </div>
+</section>
+<script src="menu.js">
+    let myaudio = document.getElementById("audioID").autoplay = true;
+</script>
 </body>
 </html>

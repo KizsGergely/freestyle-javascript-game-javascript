@@ -1,20 +1,32 @@
+const THEME = new Audio("static/sounds/theme.mp3")
+const cantina = new Audio("static/sounds/cantina.mp3");
+const $init = document.querySelector("#init");
+const $crawl = document.querySelector(".star-wars");
+const $menupoints = document.querySelector(".menu");
+const $creators = document.getElementById('hide');
+
 function menu(enter) {
-    const cantina = new Audio("static/sounds/cantina.mp3");
-    if (enter.keyCode === 32) {
-    cantina.play()
-    }
-    let $crawl = document.querySelector(".star-wars");
-    let $menupoints = document.querySelector(".menu");
-    let $creators = document.getElementById('hide');
     if (enter.keyCode === 13) {
-        $menupoints.style.display="none";
-        $creators.style.display="none";
-        const audio = new Audio("static/sounds/theme.mp3")
-        audio.play()
-        $crawl.style.display="flex";
-        setTimeout(function() {window.location.href = "http://localhost:63342/freestyle-javascript-game-javascript-KizsGergely/index.html";}, 18960);
+        cantina.pause();
+        if (!THEME.pause()) {
+            $menupoints.style.display = "none";
+            $creators.style.display = "none";
+            $crawl.style.display = "flex";
+            THEME.play();
+            setTimeout(function () {
+                window.location.href = "game.html";
+            }, 18960);
+        }
     }
 }
 
-window.addEventListener("keydown", menu);
+function cantinaPlay() {
+    cantina.play()
+    $init.style.display = "none";
+    $menupoints.style.display = "initial";
+    $creators.style.display = "initial";
+}
 
+$init.addEventListener('click', cantinaPlay);
+cantina.addEventListener("ended", cantinaPlay, false);
+window.addEventListener("keydown", menu);
