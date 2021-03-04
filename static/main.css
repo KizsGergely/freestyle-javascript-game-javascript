@@ -2,6 +2,8 @@ html,
 body {
   height: 100%;
   overflow: hidden;
+  background: black;
+  color: #feda4a;
 }
 
 body {
@@ -135,5 +137,59 @@ footer {
 }
 
 footer {
-  font-size: 25px;
+  font-size: 16px;
+}
+
+.menu  {
+  text-align: center;
+}
+
+#hide {
+  text-align: center;
+  position: relative;
+  top: 60%;
+  left: 10%;
+}
+
+.star-wars {
+  display: none;
+  justify-content: center;
+  position: relative;
+  height: 800px;
+  color: #feda4a;
+  font-family: 'Pathway Gothic One', sans-serif;
+  font-size: 500%;
+  font-weight: 600;
+  letter-spacing: 6px;
+  line-height: 150%;
+  perspective: 400px;
+  text-align: justify;
+}
+
+.crawl {
+  position: relative;
+  top: 99999px;
+  transform-origin: 50% 100%;
+  animation: crawl 60s linear;
+}
+
+.crawl > .title {
+  font-size: 90%;
+  text-align: center;
+}
+
+.crawl > .title h1 {
+  margin: 0 0 100px;
+  text-transform: uppercase;
+}
+
+@keyframes crawl {
+  0% {
+    top: -100px;
+    transform: rotateX(20deg)  translateZ(0);
+  }
+  100% {
+    top: -6000px;
+    transform: rotateX(25deg) translateZ(-2500px);
+  }
 }
