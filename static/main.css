@@ -141,7 +141,6 @@ footer {
 }
 
 .menu  {
-  display: none;
   text-align: center;
   color: #feda4a;
   position: absolute;
@@ -158,7 +157,6 @@ footer {
 }
 
 #hide {
-  display: none;
   text-align: center;
   position: relative;
   color: #feda4a;
@@ -167,7 +165,6 @@ footer {
 }
 
 .star-wars {
-  display: none;
   justify-content: center;
   position: relative;
   height: 800px;

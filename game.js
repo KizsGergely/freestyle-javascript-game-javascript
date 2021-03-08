@@ -253,12 +253,12 @@ function update() {
     const dt = (currentTime - GAME_STATE.lastTime) / 1000.0;
 
     if (GAME_STATE.gameOver) {
-        document.querySelector('.game-over > .score').innerHTML = GAME_STATE.game_score;
+        document.querySelector('.game-over > h3 > .score').innerHTML = GAME_STATE.game_score;
         document.querySelector('.game-over').style.display = 'block';
         return;
     }
     if (hasWon()) {
-        document.querySelector('.congratulations > .score').innerHTML = GAME_STATE.game_score;
+        document.querySelector('.congratulations > h3 > .score').innerHTML = GAME_STATE.game_score;
         STORAGE.setItem('Scores' + Math.random().toString(), GAME_STATE.game_score.toString());
         const won = new Audio('static/sounds/won.mp3');
         setTimeout(function () {

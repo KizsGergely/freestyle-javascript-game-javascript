@@ -10,7 +10,8 @@ function menu(event) {
         cantina.pause();
         if (!THEME.pause()) {
             $menupoints.classList.add('hidden');
-            $creators.style.display = 'none';
+            $creators.classList.add('hidden');
+            $crawl.classList.remove('hidden');
             $crawl.style.display = 'flex';
             THEME.play();
             setTimeout(function () {
@@ -22,8 +23,9 @@ function menu(event) {
 
 function cantinaPlay() {
     cantina.play()
-    $init.style.display = 'none';
+    $init.classList.add('hidden')
     $menupoints.classList.remove('hidden');
+    $creators.classList.remove('hidden');
     $creators.style.display = 'initial';
 }
 
